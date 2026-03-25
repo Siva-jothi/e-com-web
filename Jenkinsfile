@@ -26,7 +26,7 @@ pipeline {
 
         stage('Push to DEV Repo') {
             when {
-                branch 'dev'
+                expression { env.BRANCH_NAME == 'dev' }
             }
             steps {
                 sh 'docker push $DEV_IMAGE'
@@ -35,7 +35,7 @@ pipeline {
 
         stage('Push to PROD Repo') {
             when {
-                branch 'main'
+                expression { env.BRANCH_NAME == 'main' }
             }
             steps {
                 sh '''
