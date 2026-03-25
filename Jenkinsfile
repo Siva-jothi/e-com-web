@@ -14,15 +14,9 @@ pipeline {
             }
         }
 
-        stage('Detect Branch') {
+        stage('Print Branch') {
             steps {
-                script {
-                    env.GIT_BRANCH_NAME = sh(
-                        script: "git rev-parse --abbrev-ref HEAD",
-                        returnStdout: true
-                    ).trim()
-                    echo "Current Branch: ${env.GIT_BRANCH_NAME}"
-                }
+                echo "Branch Name: ${env.GIT_BRANCH}"
             }
         }
 
@@ -46,7 +40,7 @@ pipeline {
 
         stage('Push to DEV Repo') {
             when {
-                expression { env.GIT_BRANCH_NAME == 'dev' }
+                expression { env.GIT_BRANCH.contains("dev") }
             }
             steps {
                 sh 'docker push $DOCKER_DEV:latest'
@@ -55,7 +49,7 @@ pipeline {
 
         stage('Push to PROD Repo') {
             when {
-                expression { env.GIT_BRANCH_NAME == 'main' }
+                expression { env.GIT_BRANCH.contains("main") }
             }
             steps {
                 sh '''
