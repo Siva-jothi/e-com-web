@@ -49,7 +49,7 @@ pipeline {
 
         stage('Push to PROD Repo') {
             when {
-                expression { env.GIT_BRANCH.contains("main") }
+                expression { env.GIT_BRANCH.contains("origin/main") }
             }
             steps {
                 sh '''
