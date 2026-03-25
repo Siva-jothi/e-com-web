@@ -9,12 +9,7 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
-            steps {
-                git branch: "${env.BRANCH_NAME}", url: 'https://github.com/Siva-jothi/e-com-web.git'
-            }
-        }
-
+       
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t $DEV_IMAGE .'
